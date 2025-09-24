@@ -3,8 +3,11 @@ import { supabase } from '../supabaseClient.js';
 
 const router = express.Router();
 
+// Rota para validar CNPJ
 router.post('/validar-cnpj', async (req, res) => {
     const { cnpj } = req.body;
+
+    if (!cnpj) return res.status(400).json({ valido: false, mensagem: 'CNPJ não fornecido.' });
 
     const { data, error } = await supabase
         .from('empresas')
